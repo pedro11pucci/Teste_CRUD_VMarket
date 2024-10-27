@@ -21,7 +21,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('suppliers.create');
     }
 
     /**
@@ -29,7 +29,11 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate(Supplier::rules(), Supplier::messages());
+
+        Supplier::create($request->except('_token'));
+        return redirect('suppliers')->with('success','Foi');
     }
 
     /**

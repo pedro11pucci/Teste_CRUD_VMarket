@@ -7,4 +7,8 @@ use App\Http\Controllers\SupplierController;
 Route::view('/', 'home');
 
 Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers');
+Route::get('/suppliers/create', [SupplierController::class,'create'])->name('suppliers/create');
+Route::post('/suppliers/store', [SupplierController::class, 'store'])->name('suppliers/store');
+
+
 Route::get('/products', [ProductController::class, 'index'])->name('products');
