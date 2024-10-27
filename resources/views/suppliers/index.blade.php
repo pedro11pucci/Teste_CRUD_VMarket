@@ -47,11 +47,17 @@
         </table>
     </div>
 
-    <div class="mt-4 mr-12 flex justify-end">
-        <button type="submit" id="delete-button" class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed hover:bg-red-700 transition" disabled>
-            <x-monoicon-delete style="height: 24px; width: 24px;"/>
-        </button>
-    </div>
+    <form id="delete-form" action="{{ route('suppliers/delete') }}" method="POST">
+        @csrf
+        @method('DELETE') 
+        <input type="hidden" id="selected-ids" name="selected_ids" value="">
+    
+        <div class="mt-4 mr-12 flex justify-end">
+            <button type="submit" id="delete-button" class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed hover:bg-red-700 transition" disabled>
+                <x-monoicon-delete style="height: 24px; width: 24px;"/>
+            </button>
+        </div>
+    </form>
 </div>
 
 <script>
@@ -65,14 +71,30 @@
         toggleDeleteButton();
     }
 
+    function updateSelectedIds() {
+        const deleteForm = document.getElementById('delete-form');
+        const selectedIdsInput = document.getElementById('selected-ids');
+
+        if (selectedIdsInput) {
+            const checkboxes = document.querySelectorAll('.select-item:checked');
+            const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+            
+            selectedIdsInput.value = selectedIds.join(',');
+        }
+    }
+
     function toggleDeleteButton() {
         const checkboxes = document.querySelectorAll('.select-item');
         const deleteButton = document.getElementById('delete-button');
 
-        const isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
-        deleteButton.disabled = !isAnyChecked;
-        deleteButton.classList.toggle('opacity-50', !isAnyChecked);
-        deleteButton.classList.toggle('cursor-not-allowed', !isAnyChecked);
+        if (deleteButton) {
+            const isAnyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+            deleteButton.disabled = !isAnyChecked;
+            deleteButton.classList.toggle('opacity-50', !isAnyChecked);
+            deleteButton.classList.toggle('cursor-not-allowed', !isAnyChecked);
+        }
+
+        updateSelectedIds();
     }
 
     function filterSuppliers() {

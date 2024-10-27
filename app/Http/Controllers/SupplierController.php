@@ -75,8 +75,16 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Supplier $supplier)
+    public function destroy(Request $request)
     {
-        //
+        $ids = $request->input('selected_ids');
+    
+        if ($ids) {
+            $idsArray = explode(',', $ids);    
+            Supplier::whereIn('id', $idsArray)->delete();
+        }
+        
+        return redirect()->route('suppliers')->with('success', value: '');
     }
+    
 }
