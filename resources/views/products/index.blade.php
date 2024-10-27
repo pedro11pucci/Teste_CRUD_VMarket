@@ -5,7 +5,7 @@
 <div class="container mx-auto">
     <div class="mb-4 mt-10 flex justify-between items-center">
         <div class="flex-grow mr-4">
-            <input type="text" id="search" placeholder="Pesquisar produto por nome" class="border border-gray-300 px-4 py-2 rounded w-3/6" onkeyup="filterProducts()" />
+            <input type="text" id="search" placeholder="Pesquisar produto por nome ou fornecedor" class="border border-gray-300 px-4 py-2 rounded w-3/6" onkeyup="filterProducts()" />
         </div>
         <a href="{{ route('products/create') }}" class="bg-blue-500 text-white px-8 py-2 rounded hover:bg-blue-700 transition">Cadastrar Novo Produto</a>
     </div>
@@ -103,7 +103,9 @@
 
         rows.forEach(row => {
             const productName = row.getAttribute('data-name');
-            row.style.display = productName.includes(searchInput) ? '' : 'none';
+            const suppliers = row.cells[4].innerText.toLowerCase();
+
+            row.style.display = productName.includes(searchInput) || suppliers.includes(searchInput) ? '' : 'none';
         });
     }
 
