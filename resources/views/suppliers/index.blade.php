@@ -35,7 +35,7 @@
                     <td class="border px-4 py-2"> {{ $supplier->phone }} </td>
                     <td class="border px-4 py-2"> {{ $supplier->email }} </td>
                     <td class="border px-2 py-2 w-1/12 text-center">
-                        <a href="" class="bg-yellow-500 text-white px-2 py-1 rounded inline-flex hover:bg-yellow-700 transition"><x-eva-edit-outline style="height: 20px; width: 20px;" /></a>
+                        <a href="{{ route('suppliers/edit', $supplier->id) }}" class="bg-yellow-500 text-white px-2 py-1 rounded inline-flex hover:bg-yellow-700 transition"><x-eva-edit-outline style="height: 20px; width: 20px;" /></a>
                     </td>
                     <td class="border px-2 py-2 w-1/12 text-center">
                         <input type="checkbox" name="selected_ids[]" value="{{ $supplier->id }}" class="transform scale-125 select-item" onclick="toggleDeleteButton()" />

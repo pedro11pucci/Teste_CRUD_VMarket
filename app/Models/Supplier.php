@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Validation\Rule;
 
 class Supplier extends Model
 {
@@ -19,14 +20,19 @@ class Supplier extends Model
 
     public static function rules($id = null) {
         return [
-            "name"=> "required|string|",
-            "cnpj"=> "required|string|unique:suppliers,cnpj,".$id,
+            "name"=> "required|string",
+            'cnpj' => [
+                'required',
+                'string',
+                'max:20',
+                Rule::unique('suppliers')->ignore($id)
+            ],
             "location"=> "required|string",
             "phone"=> "required|string",
-            "email"=> "required|string|"
+            "email"=> "required|string|email"
         ];
     }
-
+    
     public static function messages() {
         return [
             'cnpj.unique' => 'Este CNPJ já está cadastrado'

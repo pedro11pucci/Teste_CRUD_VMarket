@@ -33,7 +33,7 @@ class SupplierController extends Controller
         $request->validate(Supplier::rules(), Supplier::messages());
 
         Supplier::create($request->except('_token'));
-        return redirect('suppliers')->with('success','Foi');
+        return redirect('suppliers')->with('success','');
     }
 
     /**
@@ -47,19 +47,31 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Supplier $supplier)
+    public function edit(int $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        return view('suppliers.edit', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(Request $request, int $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+    
+        $request->validate(Supplier::rules($id), Supplier::messages());
+    
+        $supplier->name = $request->input('name');
+        $supplier->cnpj = $request->input('cnpj');
+        $supplier->location = $request->input('location');
+        $supplier->phone = $request->input('phone');
+        $supplier->email = $request->input('email');
+    
+        $supplier->save();
+        return redirect('suppliers')->with('success','');
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
