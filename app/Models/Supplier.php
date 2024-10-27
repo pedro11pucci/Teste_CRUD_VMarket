@@ -38,4 +38,9 @@ class Supplier extends Model
             'cnpj.unique' => 'Este CNPJ já está cadastrado'
         ];
     }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'suppliers_products');
+    }
 }
