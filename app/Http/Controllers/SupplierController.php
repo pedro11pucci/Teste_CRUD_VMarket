@@ -62,14 +62,8 @@ class SupplierController extends Controller
     
         $request->validate(Supplier::rules($id), Supplier::messages());
     
-        $supplier->name = $request->input('name');
-        $supplier->cnpj = $request->input('cnpj');
-        $supplier->location = $request->input('location');
-        $supplier->phone = $request->input('phone');
-        $supplier->email = $request->input('email');
-    
-        $supplier->save();
-        return redirect('suppliers')->with('success','');
+        $supplier->update($request->except('_token'));
+        return redirect('suppliers')->with('success',value: '');
     }
     
     /**

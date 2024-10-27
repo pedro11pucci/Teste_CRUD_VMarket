@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Atualizar Produto')
+@section('title', 'Cadastrar Produto')
 @section('content')
 
 <div class="container mx-auto flex justify-center mt-10">
@@ -8,43 +8,46 @@
             <a href="{{ route('products') }}" class="bg-gray-500 text-white px-8 py-2 rounded hover:bg-gray-700 transition">Voltar</a>
         </div>
 
-        <form action="{{ route('products/update', $supplier->id) }}" method="POST">
+        <form action="{{ route('products/update', $product->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="flex mb-4">
                 <div class="w-1/2 pr-2">
                     <label for="name" class="block text-lg font-medium text-gray-700 mb-4">Nome</label>
-                    <input type="text" id="name" name="name" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Nome do produto" value="{{ $supplier->name }}" />
+                    <input type="text" id="name" name="name" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Nome do produto" value="{{ $product->name }}" />
                 </div>
                 <div class="w-1/2 pl-2">
-                    <label for="cnpj" class="block text-lg font-medium text-gray-700 mb-4">Código</label>
-                    <input type="text" id="cnpj" name="cnpj" required placeholder="Código do produto" class="border border-gray-300 px-4 py-2 rounded w-full @error('cnpj') border-red-500 @enderror" value="{{ old('cnpj', $supplier->cnpj) }}" />
-                    @error('cnpj')
+                    <label for="code" class="block text-lg font-medium text-gray-700 mb-4">Código</label>
+                    <input type="text" id="code" name="code" required placeholder="Código do fornecedor" class="border border-gray-300 px-4 py-2 rounded w-full @error('code') border-red-500 @enderror" value="{{ old('code', $product->code) }}" />
+                    @error('code')
                         <div class="text-red-500 mt-1 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
-                
             </div>
 
             <div class="mb-4 mt-10">
-                <label for="location" class="block text-lg font-medium text-gray-700 mb-4">Localização</label>
-                <input type="text" id="location" name="location" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Localização do fornecedor" value="{{ $supplier->location }}" />
-            </div>
+                <label for="description" class="block text-lg font-medium text-gray-700 mb-4">Descrição</label>
+                <textarea id="description" name="description" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Descrição do produto" rows="4">{{ old('description', $product->description) }}</textarea>
+            </div>           
 
             <div class="flex mb-4 mt-10">
                 <div class="w-1/2 pr-2">
-                    <label for="phone" class="block text-lg font-medium text-gray-700 mb-4">Telefone</label>
-                    <input type="text" id="phone" name="phone" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Telefone do fornecedor" value="{{ $supplier->phone }}" />
+                    <label for="price" class="block text-lg font-medium text-gray-700 mb-4">Preço</label>
+                    <input type="number" id="price" name="price" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="Preço do produto" value="{{ $product->price }}" />
                 </div>
                 <div class="w-1/2 pl-2">
-                    <label for="email" class="block text-lg font-medium text-gray-700 mb-4">E-mail</label>
-                    <input type="email" id="email" name="email" required class="border border-gray-300 px-4 py-2 rounded w-full" placeholder="E-mail do fornecedor" value="{{ $supplier->email }}" />
+                    <label for="products" class="block text-lg font-medium text-gray-700 mb-4">Fornecedores</label>
+                    <select id="products" name="suppliers[]" class="border border-gray-300 px-4 py-2 rounded w-full" multiple>
+                        @foreach($suppliers as $supplier)
+                            <option value="{{ $supplier->id }}" {{ $product->suppliers->contains($supplier->id) ? 'selected' : '' }}>{{ $supplier->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
             <div class="flex justify-end mt-16">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Atualizar Produto</button>
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Cadastrar Produto</button>
             </div>
         </form>
 

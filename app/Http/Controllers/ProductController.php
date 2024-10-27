@@ -51,17 +51,25 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(int $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $suppliers = Supplier::all();
+        return view('products.edit', compact('product', 'suppliers'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        $request->validate(Product::rules($id), Product::messages());
+
+        $product->update($request->except('_token'));
+        $product->suppliers()->sync($request->suppliers);
+        return redirect('products')->with('success',value: '');
     }
 
     /**
