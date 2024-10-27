@@ -7,7 +7,7 @@
         <div class="flex-grow mr-4">
             <input type="text" id="search" placeholder="Pesquisar produto por nome" class="border border-gray-300 px-4 py-2 rounded w-3/6" onkeyup="filterProducts()" />
         </div>
-        <a href="" class="bg-blue-500 text-white px-8 py-2 rounded hover:bg-blue-700 transition">Cadastrar Novo Produto</a>
+        <a href="{{ route('products/create') }}" class="bg-blue-500 text-white px-8 py-2 rounded hover:bg-blue-700 transition">Cadastrar Novo Produto</a>
     </div>
     <div class="overflow-auto max-h-[650px] relative">
         <table class="min-w-full border border-gray-300" id="products-table">
@@ -51,7 +51,7 @@
         @csrf
         @method('DELETE') 
         <input type="hidden" id="selected-ids" name="selected_ids" value="">
-    
+
         <div class="mt-4 mr-12 flex justify-end">
             <button type="submit" id="delete-button" class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed hover:bg-red-700 transition" disabled>
                 <x-monoicon-delete style="height: 24px; width: 24px;"/>

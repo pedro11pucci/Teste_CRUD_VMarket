@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $suppliers = Supplier::all();
+        return view('products.create', compact('suppliers'));
     }
 
     /**
@@ -29,7 +31,13 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(Product::rules(), Product::messages());
+        
+        $product = Product::create($request->except('_token', 'suppliers'));
+
+        $product->suppliers()->sync($request->suppliers);
+
+        return redirect()->route('products')->with('success', '');
     }
 
     /**
