@@ -39,7 +39,7 @@
                     <label for="suppliers" class="block text-lg font-medium text-gray-700 mb-4">Fornecedores</label>
                     <select id="suppliers" name="suppliers[]" class="border border-gray-300 px-4 py-2 rounded w-full" multiple>
                         @foreach($suppliers as $id => $supplier)
-                            <option value="{{ $id }}">{{ $supplier->name }}</option>
+                            <option value="{{ $id+1 }}">{{ $supplier->name }}</option>
                         @endforeach
                     </select>
                 </div>
