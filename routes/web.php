@@ -4,7 +4,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SupplierController;
 
-Route::view('/', 'home');
+Route::redirect('/', '/suppliers');
 
 Route::prefix('suppliers')->group(function () {
     Route::get('/', [SupplierController::class, 'index'])->name('suppliers');
